@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="reset.css" rel="stylesheet" type="text/css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <!-- <link rel='stylesheet' media='screen and (min-width: 701px) and (max-width: 768px)' href='css/medium.css' /> -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>                    
+    <title>Encriptador</title>
+</head>
+<body>
+    <div class="containerPrincipal">
+
+        <div class="containerLogo">
+            <!-- <img src="img/Logo.png" alt=""> -->
+            <div class="logo"></div>
+        </div>
+        
+        <div class="containerEncriptar">
+            <textarea id="domTextElement" class="textoIngresado" placeholder="Ingrese el texto aqui"></textarea>
+            
+            <!-- <input> -->
+    
+            <div class="containerBotones">
+                <div class="containerReglas">
+                    <i class='fa fa-exclamation-circle'></i>
+                    <p>Apenas letras minúsculas e sem acento.</p>       
+                </div>
+                <button class="botonesEncriptar botonEncriptar" onclick="encriptar()">Encriptar</button>
+                <button class="botonesEncriptar botonDesencriptar" onclick="desencriptar()">Desencriptar</button>
+            </div>
+        
+        </div>
+    
+        <div class="textarea-container">
+            <div id="containerSinMensaje" class="containerSinMensaje"></div>
+            <!-- Prueba cambiando el textarea por otro tipo de contenedor de texto, para poder ajutar el texto -->
+            <!-- <p id="valueInput"></p> -->
+            <textarea id="valueInput"></textarea>
+            <button id="botonCopiar" onclick="copiarTexto()" class="botonCopiar">copiar</button>
+          </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var noHayMensaje = true;
+
+    function limpiar(){
+        document.getElementById("domTextElement").value = "";
+    }
+
+    function llenarCampo(texto){
+        document.getElementById("valueInput").innerHTML = texto;
+    }
+
+    function encriptar(){
+        sinMensaje(false);
+        let texto = document.getElementById("domTextElement").value;
+        
+        var textoCifrado = texto.replace(/e/gi, "enter").replace(/i/gi, "imes").replace(/a/gi, "ai").replace(/o/gi, "ober")
+        .replace(/u/gi, "ufat");
+        llenarCampo(textoCifrado);
+        // limpiar();
+    }
+
+    function desencriptar (){ 
+        sinMensaje(false);
+        var texto = document.getElementById("domTextElement").value;
+
+        var textoCifrado = texto.replace(/enter/gi, "e").replace(/imes/gi, "i").replace(/ai/gi, "a").replace(/ober/gi, "o")
+        .replace(/ufat/gi, "u");
+        llenarCampo(textoCifrado); 
+        // limpiar();
+    }
+
+    function copiarTexto(){
+        var texto = document.getElementById("valueInput");
+        texto.select();
+        document.execCommand('copy'); 
+    }
+
+    function sinMensaje(hayMensaje){
+
+        if(noHayMensaje == hayMensaje){
+            var ele = document.getElementById("containerSinMensaje");
+            ele.innerHTML = `
+                    <img class="imgSinMensaje" src="img/Muñeco.png">
+                    <h1 class="noHayMensaje">Ningún mensaje fue encontrado</h1>
+                    <p>Ingresa el texto que desees encriptar o desencriptar</p>
+                `;
+                verContenedorSinMensaje();
+        }else{
+            verContenedorConMensaje();
+        }
+    }
+
+    function verContenedorSinMensaje(){
+        var visibility = "visibility: hidden";
+        var textArea = document.getElementById("valueInput");
+        var boton = document.getElementById("botonCopiar");
+        boton.style = visibility;
+        textArea.style = visibility;
+    }
+
+    function verContenedorConMensaje(){
+        var visibility = "visibility: visible";
+        var textArea = document.getElementById("valueInput");
+        var boton = document.getElementById("botonCopiar");
+        boton.style = visibility;
+        textArea.style = visibility;
+
+        var ele = document.getElementById("containerSinMensaje");
+        ele.style = "visibility: hidden";
+    }
+
+    sinMensaje(true);
+
+</script>
