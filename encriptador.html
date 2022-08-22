@@ -28,7 +28,7 @@
             <div class="containerBotones">
                 <div class="containerReglas">
                     <i class='fa fa-exclamation-circle'></i>
-                    <p>Apenas letras minúsculas e sem acento.</p>       
+                    <p>Solo letras minúsculas y sin acentos.</p>       
                 </div>
                 <button class="botonesEncriptar botonEncriptar" onclick="encriptar()">Encriptar</button>
                 <button class="botonesEncriptar botonDesencriptar" onclick="desencriptar()">Desencriptar</button>
@@ -39,8 +39,8 @@
         <div class="textarea-container">
             <div id="containerSinMensaje" class="containerSinMensaje"></div>
             <!-- Prueba cambiando el textarea por otro tipo de contenedor de texto, para poder ajutar el texto -->
-            <!-- <p id="valueInput"></p> -->
-            <textarea id="valueInput"></textarea>
+            <div class="textoResultado" id="valueInput"></div>
+            <!-- <textarea class="textoResultado" id="valueInput"></textarea> -->
             <button id="botonCopiar" onclick="copiarTexto()" class="botonCopiar">copiar</button>
           </div>
     </div>
@@ -58,30 +58,74 @@
         document.getElementById("valueInput").innerHTML = texto;
     }
 
-    function encriptar(){
-        sinMensaje(false);
-        let texto = document.getElementById("domTextElement").value;
+    function validarQueHayTexto(texto){
+        var validaciones;
+
+        if(!texto){
+            validaciones = "Debes ingresar texto";
+        }else{
+
+            var i=0;
+            var character='';
+            while (i <= texto.length){
+                character = texto.charAt(i);
+                    if (character == character.toUpperCase()) {
+                        validaciones = "No puedes escribir mayusculas o acentos!";
+                        break;
+                    }
+                i++;
+            }
+        }
         
+        return validaciones;
+    }
+
+    function encriptar(){
+        let texto = document.getElementById("domTextElement").value;
+        var validacion = validarQueHayTexto(texto);
+
+        if(validacion){
+            alert(validacion);
+            return;
+        }
+        sinMensaje(false);
+    
         var textoCifrado = texto.replace(/e/gi, "enter").replace(/i/gi, "imes").replace(/a/gi, "ai").replace(/o/gi, "ober")
         .replace(/u/gi, "ufat");
         llenarCampo(textoCifrado);
-        // limpiar();
+        limpiar();
     }
 
-    function desencriptar (){ 
+    function desencriptar (){
+        var texto = document.getElementById("domTextElement").value; 
+        var validacion = validarQueHayTexto(texto);
+
+        if(validacion){
+            alert(validacion);
+            return;
+        }
         sinMensaje(false);
-        var texto = document.getElementById("domTextElement").value;
 
         var textoCifrado = texto.replace(/enter/gi, "e").replace(/imes/gi, "i").replace(/ai/gi, "a").replace(/ober/gi, "o")
         .replace(/ufat/gi, "u");
         llenarCampo(textoCifrado); 
-        // limpiar();
+        limpiar();
     }
 
     function copiarTexto(){
-        var texto = document.getElementById("valueInput");
-        texto.select();
-        document.execCommand('copy'); 
+        // Si el resultado del texto es un <p> o <div> etc, usar este codigo.
+        document.getElementById("valueInput").focus();
+        var text = document.getElementById("valueInput").innerText;
+        var elem = document.createElement("textarea");
+        document.body.appendChild(elem);
+        elem.value = text;
+        elem.select();
+        document.body.removeChild(elem);
+
+        // Si el resultado del texto es un textarea usar este codigo
+        // var text = document.getElementById("valueInput");
+        // text.select();
+        // document.execCommand("copy");
     }
 
     function sinMensaje(hayMensaje){

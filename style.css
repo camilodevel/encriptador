@@ -113,11 +113,14 @@ body{
 .textarea-container {
     display: flex;
     position: relative;
-    height: 620px;
+    /* height: 620px; */
     width: 25%;
     padding: 0 30px;
     margin: 30px auto;
     justify-content: center;
+
+    padding: 0px 30px 80px;
+    word-wrap: break-word;
 
     background: white;
     box-shadow: rgb(50 50 93 / 25%) 0px 13px 27px -5px, rgb(0 0 0 / 30%) 0px 8px 16px -8px;
@@ -153,7 +156,7 @@ body{
     color: #495057;
 }
 
-.textarea-container textarea {
+.textarea-container .textoResultado {
     margin-top: 25px;
     width: 100%;
     height: 80%;
@@ -163,12 +166,17 @@ body{
     outline: none;
     background: transparent;
 
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
+
     font-size: 24px;
 }
 
 .textarea-container button {
     position: absolute;
     bottom: 5%;
+    /* margin-bottom: 10px; */
 }
 
 .botonCopiar{
@@ -189,6 +197,11 @@ body{
         width: 100%;
     }
 
+    /* si el resultado del texto es en un text area usar este estilo */
+    /* .textarea-container{
+        height: 250px;
+    } */
+
     .logo{
         background-image: url(img/logo2.png);
         width: 31px;
@@ -205,6 +218,15 @@ body{
     .containerEncriptar{
         padding: 0;
         margin-top: 0;
+    }
+
+}
+
+@media (max-width: 375px) {
+
+    .botonEncriptar, .botonDesencriptar{
+        margin: 10px 0;
+        width: 100%;
     }
 
 }
