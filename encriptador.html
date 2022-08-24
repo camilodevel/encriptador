@@ -67,14 +67,33 @@
 
             var i=0;
             var character='';
-            while (i <= texto.length){
+
+            for (let i = 0; i < texto.length; i++) {
                 character = texto.charAt(i);
-                    if (character == character.toUpperCase()) {
-                        validaciones = "No puedes escribir mayusculas o acentos!";
-                        break;
-                    }
-                i++;
+                characterUp = texto.charAt(i).toUpperCase();
+                if (character == characterUp) {
+                    validaciones = "No puedes escribir mayusculas! \n";
+                    break;
+                }
             }
+
+            var accentArray = ["á","à","ã","â","é","è","ê","í","ì","î","õ","ó","ò","ô","ú","ù","û"]
+            // var stringToCheck = "áeiou"
+
+            for(var i=0; i < texto.length; i++){
+                for(var j=0; j < accentArray.length; j++){
+                    if(texto[i] === accentArray[j]){
+                        if(validaciones){
+                            validaciones += "No puedes escribir acentos!";
+                            break;
+                        }else{
+                            validaciones = "No puedes escribir acentos!";
+                            break;
+                        }
+                    }
+                }
+            }
+
         }
         
         return validaciones;
