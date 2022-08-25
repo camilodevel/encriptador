@@ -133,12 +133,13 @@
 
     function copiarTexto(){
         // Si el resultado del texto es un <p> o <div> etc, usar este codigo.
-        document.getElementById("valueInput").focus();
         var text = document.getElementById("valueInput").innerText;
         var elem = document.createElement("textarea");
         document.body.appendChild(elem);
+        console.log(text);
         elem.value = text;
         elem.select();
+        document.execCommand("copy");
         document.body.removeChild(elem);
 
         // Si el resultado del texto es un textarea usar este codigo
