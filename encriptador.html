@@ -61,7 +61,10 @@
     function validarQueHayTexto(texto){
         var validaciones;
 
-        if(!texto){
+        if(!texto || 
+            // texto.indexOf(' ') >= 0
+            !texto.replace(/\s/g, '').length
+            ){
             validaciones = "Debes ingresar texto";
         }else{
 
@@ -71,14 +74,18 @@
             for (let i = 0; i < texto.length; i++) {
                 character = texto.charAt(i);
                 characterUp = texto.charAt(i).toUpperCase();
-                if (character == characterUp) {
-                    validaciones = "No puedes escribir mayusculas! \n";
-                    break;
+            // Validacion para que solo tome en cuenta las mayusculas e ignore los espacios o saltos de linea.
+            if( !character.replace(/\s/g, '').length ){
+                    
+                }else{
+                    if (character == characterUp) {
+                        validaciones = "No puedes escribir mayusculas! \n";
+                        break;
+                    }
                 }
             }
 
             var accentArray = ["á","à","ã","â","é","è","ê","í","ì","î","õ","ó","ò","ô","ú","ù","û"]
-            // var stringToCheck = "áeiou"
 
             for(var i=0; i < texto.length; i++){
                 for(var j=0; j < accentArray.length; j++){
